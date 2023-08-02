@@ -74,7 +74,7 @@ func (r *router) handle(c *Context) {
 	if n != nil {
 		c.Params = params
 		key := c.Method + "-" + n.pattern
-		c.handlers = append(c.handlers, r.handlers[key])
+		c.handlers = append(c.handlers, r.handlers[key]) // 将handler加到最后面，[middleware1, ... middleware 99, handler] 通过调用c.Next 中间件可以实现先处理handler再做其他处理
 	} else {
 		c.handlers = append(c.handlers, func(c *Context) {
 			c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
